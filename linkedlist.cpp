@@ -41,7 +41,39 @@ class Solution_24 {
     }
 };
 
+class Solution_19 {
+public:
+    ListNode* removeNthFromEnd(ListNode* head, int n) {
+        if (head == nullptr) return head;
+		//create two pointers, one at the head, the other pointing to the first pointer
+        ListNode* result = new ListNode(0, head);
+        ListNode* ptrOne = result;
+
+		//navigate the head n times through the linked list
+        for (int i = 0; i < n; i++) {
+            head = head->next;
+        }
+
+		//the idea is that if we move the head n times, then all we have to do is
+		//have the head continue to the end of the list, moving both pointers at the same time
+		//if we reach the end, then the second pointer will be n times from the end of the list
+        while(head != nullptr) {
+            head = head->next;
+            ptrOne = ptrOne->next;
+        }
+
+		//set the next node equal to the next one after that to avoid memory issues
+        ptrOne->next = ptrOne->next->next;
+
+		//simple deletion of a node where we know where it is
+        ListNode* temp = result->next;
+        delete result;
+        return temp;
+    }
+};
+
 
 int main(){
+	//Problem 19: Delete nth node from the end of a Linked List 
 	//Problem 24: Swap Nodes in Linked List (without modifying values)
 }
