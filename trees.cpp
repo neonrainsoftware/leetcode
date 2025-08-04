@@ -43,6 +43,26 @@ public:
     }   
 };
 
+class Solution_100 {
+public:
+    bool isSameTree(TreeNode* p, TreeNode* q) {
+		//another classic BFS search
+		//are no trees there? then its true
+        if (!p && !q) return true;
+        return checkTree(p, q);
+    }
+
+    bool checkTree(TreeNode* nodeOne, TreeNode* nodeTwo) {
+		//if the nodes on this level are not there, then its true
+        if (!nodeOne && !nodeTwo) return true;
+		//if one exists but not hte other, then its false
+        if (!nodeOne || !nodeTwo) return false;
+		//we check the boolean value of what we return by recursively calling this function on the left and right nodes of each branching path
+        return (nodeOne->val == nodeTwo->val && (checkTree(nodeOne->left, nodeTwo->left) && checkTree(nodeOne->right, nodeTwo->right)));
+    }
+};
+
 int main() {
 	//Problem 637: Find the average value of each level in a tree using BFS
+	//Problem 100: Check if two trees are identical to each other
 }
