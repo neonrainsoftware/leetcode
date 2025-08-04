@@ -58,6 +58,37 @@ public:
     }
 };
 
+class Solution_217 {
+public:
+    bool containsDuplicate(std::vector<int>& nums) {
+        //base case
+        if (nums.empty()) {
+            return true;
+        }
+
+        int key, j;
+        //loop through the array once
+        for (int i = 0; i < nums.size(); i++) {
+            //take the key that we're comparing to 
+            key = nums[i];
+            j = i - 1;
+
+            //make sure we're not going out of bounds and check if the jth element in the array is greater than our key 
+            while (j >= 0 && nums[j] >= key) {
+                //if its the same as our key, we leave early
+                if (nums[j] == key) {
+                    return true;
+                }
+                nums[j+1] = nums[j];
+                j--;
+            }
+            nums[j+1] = key;
+        }
+        return false;
+    }
+};
+
 int main() {
 	//Problem 18: Return unique quadruplets in list based on their sum being equal to the target number
+    //Problem 217: Check if all elements in an array are unique
 }
