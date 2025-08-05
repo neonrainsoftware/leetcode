@@ -1,4 +1,7 @@
 #include <vector>
+#include <math.h>
+#include <unordered_map>
+#include <algorithm>
 
 class Solution {
 public:
@@ -31,8 +34,34 @@ public:
     }
 };
 
-
+class Solution_128 {
+public:
+    int longestConsecutive(std::vector<int>& nums) {
+        //the idea here is to use a map to update each item and each consecutive item in a map
+        //this way, we can key them based on the number in that array and allow us to keep track of every consecutive one 
+        //more easily
+        std::unordered_map<int, int> ans;
+        int maxLength = 0;
+        for (auto item: nums) {
+            //if the item doesn't exist already, create it. this helps us ignore duplicates 
+            if (!ans[item]) {
+                //we treat everything as an island of sorts. we set the number to 1 if we haven't seen it already, otherwise
+                //we use item + 1 or item - 1 depending on which consecutive numbers we've seen already. this will help us
+                //"build" out the islands as we make them and we can continue to increment them as new ones get added because
+                //maps and keying makes the process easier
+                ans[item] = ans[item - 1] + ans[item + 1] + 1;
+                ans[item - ans[item - 1]] = ans[item];
+                ans[item + ans[item + 1]]  = ans[item];
+                
+                //take the max length of the final addition to our islands
+                maxLength = std::max(maxLength, ans[item]);
+            }
+        }
+        return maxLength;
+    }
+};
 
 int main() {
 	//Problem 238: Return array with all entries being a product of every other entry in that list
+    //Problem 128: Return the length of the longest consecutive numbers list in a list
 }
