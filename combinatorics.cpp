@@ -31,6 +31,33 @@ public:
     }
 };
 
+class Solution {
+public:
+    int findTargetSumWays(std::vector<int>& nums, int target) {
+        if (nums.size() == 0) return 0; 
+        //never modify the incoming data unless explictly stated otherwise
+        std::vector<int> result = nums;
+        return sumHelper(result, target, 0, 0);
+    }
+
+    //we use a recursive solution when we need to make permutations like this problem
+    int sumHelper(std::vector<int>& vec, int target, int index, int sum) {
+        //we return early if we found that the index is greater than our size of the array, because 
+        //we've reached a point where subtraction and/or addition is no longer possible
+        if (vec.size() <= index)
+            return 1 ? sum == target : 0;
+        
+        //we're adding or subtracting the number based on which number in the array that we're
+        //currently looking at
+        int subtract = sumHelper(vec, target, index + 1, sum - vec[index]);
+        int add = sumHelper(vec, target, index + 1, sum + vec[index]);
+
+        //return the result if we don't return early
+        return subtract + add; 
+    }
+};
+
 int main() {
 	//Problem 22: Generate a number of parenthesis based on any number n
+	//Problem 494: Return all possible +/- expressions given a vector and a target number
 }
