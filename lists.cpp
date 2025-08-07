@@ -1,6 +1,7 @@
 #include <vector>
 #include <math.h>
 #include <unordered_map>
+#include <map>
 #include <algorithm>
 
 class Solution {
@@ -61,7 +62,38 @@ public:
     }
 };
 
+class Solution_198 {    
+public:
+    //this is not an ideal way to instantiate the data, but it works well for the solution for the purposes
+    //of keeping track of where we are at all times
+    std::map<int, int> ansmap;
+    std::vector<int> ans;
+    
+    //helper iterative function to determine if we can rob a certain index in the vector
+    int check(int money) {
+        if (money == 0) return ans[0];
+        if (money == 1) return std::max(ans[0], ans[1]);
+        
+        //if we don't find the money within our indexed map, we simply add to where it should be,
+        //iteratively calling the helper function each time based on the forward and backward index 
+        //of what we're looking for
+        auto itr = ansmap.find(money);
+        if (itr == ansmap.end()) {
+            ansmap.emplace(money, std::max(check(money - 1), check(money - 2) + ans[money]));
+        }
+        
+        //return whatever is at our index in the map
+        return ansmap.at(money);
+    }
+       
+    int rob(std::vector<int>& nums) {
+        ans = nums;
+        return check(nums.size() - 1);
+    }
+};
+
 int main() {
 	//Problem 238: Return array with all entries being a product of every other entry in that list
     //Problem 128: Return the length of the longest consecutive numbers list in a list
+    //Problem 198: Return the highest amount of money in an array given some parameters without getting caught 
 }

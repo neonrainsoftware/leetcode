@@ -1,7 +1,7 @@
 #include <vector>
 #include <string>
 
-class Solution {
+class Solution_22 {
 public:
     std::vector<std::string> generateParenthesis(int n) {
         if (n <= 0) return std::vector<std::string>();
@@ -31,7 +31,7 @@ public:
     }
 };
 
-class Solution {
+class Solution_494 {
 public:
     int findTargetSumWays(std::vector<int>& nums, int target) {
         if (nums.size() == 0) return 0; 
