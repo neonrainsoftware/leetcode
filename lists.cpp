@@ -93,8 +93,46 @@ public:
     }
 };
 
+class Solution_213 {
+public:
+
+    //similar to 198, we have to recursively go through each house to check for maximum output,
+    //this time with the caveat that the first and last house are connected despite them not technically
+    //being connected, so we can't just assume we can loot from the first or last house while ignoring
+    //the other. we can account for this by rewriting the algorithm a bit
+    int rob(std::vector<int>& nums) {
+        if (nums.size() == 0) return 0;
+        if (nums.size() == 1) return nums[0];
+        int numSize = nums.size();
+        return std::max(checkHouse(nums, 0, numSize - 2), checkHouse(nums, 1, numSize - 1));
+    }
+
+    //helper function. tehcnically this would be better if we passed in a copy of a vector as opposed
+    //to passing in the original by reference for data integrity, but for the purposes of this problem
+    //its irrelevant
+    int checkHouse(std::vector<int>& neighbor, int start, int end) {
+        //we create a temporary vector filled with -1s based on the size of the vector we're looking at
+        //one for when we ignore the first house and another when we ignore the second
+        int n = end - start + 1;
+        std::vector<int> temp(n, -1);
+
+        //we start at the start index instead of our start to support each of the two runs that we call
+        temp[0] = neighbor[start];
+        temp[1] = std::max(neighbor[start+1], temp[0]);
+
+        //effectively the same as the previous problem, but now we're just using the vector we were
+        //provided instead of a map, filling out the temporary vector
+        for ( int i = 2; i < n; i++) 
+            temp[i] = std::max(neighbor[start + i] + temp[i - 2], temp[i-1]);
+
+        //return whichever is higher
+        return std::max(temp[n-1], temp[n-2]);
+    }
+};
+
 int main() {
 	//Problem 238: Return array with all entries being a product of every other entry in that list
     //Problem 128: Return the length of the longest consecutive numbers list in a list
     //Problem 198: Return the highest amount of money in an array given some parameters without getting caught 
+    //Problem 213: Return the highest amount of money in an array without getting caught, now circular
 }
