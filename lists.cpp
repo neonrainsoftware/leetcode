@@ -65,7 +65,8 @@ public:
 class Solution_198 {    
 public:
     //this is not an ideal way to instantiate the data, but it works well for the solution for the purposes
-    //of keeping track of where we are at all times
+    //of keeping track of where we are at all times. you could also reasonably pass by reference and it would
+    //probably be more data efficient
     std::map<int, int> ansmap;
     std::vector<int> ans;
     
