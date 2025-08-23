@@ -32,8 +32,8 @@ public:
                 temp = treeQueue.front(); 
                 treeQueue.pop();
 				//add the left and right nodes to the queue to continue through to the next level
-                if (temp->left != nullptr) treeQueue.push(temp->left);
-                if (temp->right != nullptr) treeQueue.push(temp->right);
+                if (!temp->left) treeQueue.push(temp->left);
+                if (!temp->right) treeQueue.push(temp->right);
 				//add the sum to a temporary variable that we then push the average of to the answer array
                 res += temp->val;
             }
@@ -62,7 +62,35 @@ public:
     }
 };
 
+class Solution_98 {
+public:
+    bool isValidBST(TreeNode* root) {
+
+        //a valid BST would be one who's node values are never greater than or equal to the root node values
+        //the amount of leaf nodes or how those are balanced does not matter
+
+        return validateTree(root, nullptr, nullptr);
+    }
+    
+    //helper function to help us determine the validity of a BST
+    bool validateTree(TreeNode* root, TreeNode* left, TreeNode* right) {
+        //if the root isn't there, then we return true because we've reached a leaf
+        if (!root) return true;
+        
+        //if the leaf nodes exist, but the left value or the right value is greater than
+        //or equal to the root value, return false immediately, the rest of the evaluation
+        //doesn't matter by that point because you know it's not a valid BST
+        if ((left && left->val >= root->val) || (right && root->val >= right->val))
+            return false;   
+        
+        //continue iterating, passing in the left or right as the root nodes as well as everything
+        //else that's required
+        return validateTree(root->left, left, root) && validateTree(root->right, root, right);
+    }
+};
+
 int main() {
 	//Problem 637: Find the average value of each level in a tree using BFS
 	//Problem 100: Check if two trees are identical to each other
+    //Problem 98:  Check if a tree is a valid BST (Binary Search Tree)
 }
