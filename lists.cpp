@@ -130,9 +130,41 @@ public:
     }
 };
 
+class Solution_152 {
+public:
+    int maxProduct(std::vector<int>& nums) {
+        if (nums.size() == 0) return 0;
+
+        //this approach relies on two "pointers", one that starts at the end of the list and the other
+        //at the beginning, as well as a variable that tracks the result
+        int prefix = 1, suffix = 1;
+        int result = INT_MIN;
+
+        for (int i = 0; i < nums.size(); i++) {
+            //set the prefix and suffix to the product for each number we see, the prefix starting from the 
+            //start and the suffix at the end
+            prefix *= nums[i];
+            suffix *= nums[nums.size() - i - 1];
+
+            //get the max between result, suffix, and prefix (for some reason, C++ wants to pass this in
+            //as an object as opposed to just accepting more optional parameters)
+            result = std::max({result, suffix, prefix});
+
+            //if we encounter a 0 during any point for either the prefix or suffix, set the result to 1
+            //because we've already saved the value from the previous integers, so now the rest of the
+            //sequence doesn't matter because the product will always be 0
+            if (prefix == 0) prefix = 1;
+            if (suffix == 0) suffix = 1;
+        }
+
+        return result;
+    }
+};
+
 int main() {
 	//Problem 238: Return array with all entries being a product of every other entry in that list
     //Problem 128: Return the length of the longest consecutive numbers list in a list
     //Problem 198: Return the highest amount of money in an array given some parameters without getting caught 
     //Problem 213: Return the highest amount of money in an array without getting caught, now circular
+    //Problem 152: Return the highest product amongst subarrays in an array
 }
