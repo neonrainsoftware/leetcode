@@ -1,6 +1,6 @@
 #include <vector>
 #include <math.h>
-
+#include <string>
 
 class Solution_322 {
 public:
@@ -33,6 +33,43 @@ public:
     }
 };
 
+class Solution_139 {
+public:
+    bool wordBreak(std::string s, std::vector<std::string>& wordDict) {
+        if (s.size() == 0) return false;
+
+        //this is a vague interpretation of dynamic programming, but it can be classified as such
+        //create a vector thats the same size as your word list and fill it with false
+        //we'll use the bool to return the final result
+        std::vector<bool> dp(wordDict.size() + 1, false);
+        //the first value is always true
+        dp[0] = true;
+
+        for (int i = 1; i <= s.size(); i++) {
+            
+            //we don't care about the index, so we can just use a for each loop
+            for (auto word : wordDict) {
+                
+                //find the start index 
+                int start = i - word.size();
+
+                //if the word exists and the index we're currently looking at is set to true and the substring
+                //of the word within the string s fits, then we found a neat fit, set the current i value in the
+                //dp array to true and move on to the next word
+                if (start >= 0 && dp[start] && s.substr(start, word.size()) == word) {
+                    dp[i] = true;
+                    break;
+                }
+            }
+        }
+
+        //return the last element of the array because that will tell us if all the words would fit within
+        //the string s
+        return dp[s.size()];
+    }
+};
+
 int main() {
 	//Problem 322: Return minumum number of coins required from a coin denomination list to reach an amount
+    //Problem 139: Return if an string can be split up cleanly based on the words from a given word list
 }
