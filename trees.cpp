@@ -89,8 +89,32 @@ public:
     }
 };
 
+class Solution_102 {
+public:
+
+    //helper function for traversing a binary tree
+    void bfsTraversal(std::vector<std::vector<int>>& ans, TreeNode* node, int level) {
+        if (ans.size() == level) {
+            std::vector<int> temp;
+            ans.push_back(temp);
+        }
+        ans.at(level).push_back(node->val);
+        level++;
+        if (node->left) bfsTraversal(ans, node->left, level);
+        if (node->right) bfsTraversal(ans, node->right, level);
+    }
+    
+    std::vector<std::vector<int>> levelOrder(TreeNode* root) {
+        std::vector<std::vector<int>> ans;
+        if (!root) return ans;
+        bfsTraversal(ans, root, 0);
+        return ans;
+    }
+};
+
 int main() {
 	//Problem 637: Find the average value of each level in a tree using BFS
 	//Problem 100: Check if two trees are identical to each other
     //Problem 98:  Check if a tree is a valid BST (Binary Search Tree)
+    //Problem 102: Binary Tree Level Order Traversal
 }
