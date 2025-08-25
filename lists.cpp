@@ -161,10 +161,31 @@ public:
     }
 };
 
+class Solution_41 {
+public:
+    int firstMissingPositive(std::vector<int>& nums) {
+        if (nums.size() <= 0) return 0;
+        for (int i = 0; i < nums.size(); i++) {
+            int temp = nums[i];
+            while ((temp >= 1 && temp <= nums.size()) && temp != i + 1 && nums[temp-1] != temp) {
+                std::swap(nums[temp-1], nums[i]);
+                temp = nums[i];
+            }
+        }
+        for (int j = 0; j < nums.size(); j++) {
+            if (nums[j] == j + 1)
+                continue;
+            return j + 1;
+        }
+        return nums[nums.size() - 1] + 1;
+    }
+};
+
 int main() {
 	//Problem 238: Return array with all entries being a product of every other entry in that list
     //Problem 128: Return the length of the longest consecutive numbers list in a list
     //Problem 198: Return the highest amount of money in an array given some parameters without getting caught 
     //Problem 213: Return the highest amount of money in an array without getting caught, now circular
     //Problem 152: Return the highest product amongst subarrays in an array
+    //Problem 41:  Find the first missing positive integer given a list of  numbers
 }

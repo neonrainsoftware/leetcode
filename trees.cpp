@@ -112,9 +112,43 @@ public:
     }
 };
 
+class Solution_662 {
+public:
+    int widthOfBinaryTree(TreeNode* root) {
+        if (!root) return 0;
+        std::queue<std::pair<TreeNode*, int>> q;
+        int result = 0;
+
+        q.push({root, 1});
+
+        while (!q.empty()) {
+            int queueSize = q.size();
+            int start = 0, end = 0;
+            int addrVal = q.front().second;
+            for (int i = 0; i < queueSize; i++) {
+                TreeNode* temp = q.front().first;
+                int tempVal = q.front().second - addrVal;
+                q.pop();
+
+                if (i == 0) start = tempVal;
+                if (i == queueSize - 1) end = tempVal;
+
+                if (temp->left) 
+                    q.push({temp->left, 2 * tempVal});
+                if (temp->right)
+                    q.push({temp->right, 2 * tempVal + 1});
+            }
+            result = std::max(result, end - start + 1);
+        }
+
+        return result;
+    }
+};
+
 int main() {
 	//Problem 637: Find the average value of each level in a tree using BFS
 	//Problem 100: Check if two trees are identical to each other
     //Problem 98:  Check if a tree is a valid BST (Binary Search Tree)
     //Problem 102: Binary Tree Level Order Traversal
+    //Problem 662: Find the maximum width on a Binary Tree
 }
