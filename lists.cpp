@@ -181,6 +181,40 @@ public:
     }
 };
 
+class Solution_81 {
+public:
+    bool search(std::vector<int>& nums, int target) {
+        if (nums.size() == 0) return false;
+
+        int numSize = nums.size();
+        int leftPtr = 0, rightPtr = numSize - 1;
+
+        while (leftPtr <= rightPtr) {
+            int mid = leftPtr + (rightPtr - leftPtr) / 2;
+            if (nums[mid] == target) return true;
+
+            if (nums[leftPtr] == nums[mid] && nums[rightPtr] == nums[mid]) {
+                leftPtr++;
+                rightPtr--;
+                continue;
+            }
+
+            if (nums[leftPtr] > nums[mid]) {
+                if (nums[mid] <= target && nums[rightPtr] >= target)
+                    leftPtr = mid + 1;
+                else
+                    rightPtr = mid - 1;
+            } else {
+                if (nums[mid] >= target && nums[leftPtr] <= target)
+                    rightPtr = mid - 1;
+                else 
+                    leftPtr = mid + 1;
+            }
+        }
+        return false;
+    }
+};
+
 int main() {
 	//Problem 238: Return array with all entries being a product of every other entry in that list
     //Problem 128: Return the length of the longest consecutive numbers list in a list
@@ -188,4 +222,5 @@ int main() {
     //Problem 213: Return the highest amount of money in an array without getting caught, now circular
     //Problem 152: Return the highest product amongst subarrays in an array
     //Problem 41:  Find the first missing positive integer given a list of  numbers
+    //Problem 81:  Search a rotated sorted array
 }
