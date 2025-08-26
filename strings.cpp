@@ -46,22 +46,31 @@ class Solution_3 {
 public:
     int lengthOfLongestSubstring(std::string s) {
         if (s.length() == 0) return 0;
+
+        //the ideal data structure here is an unordered set 
         std::unordered_set<char> ans;
+        //i and j are effectively trackers 
         int answer = 0, i = 0, j = 0;
 
         while (j < s.length()) {
+            //if we didnt find a substring with length j in our string 
             if (ans.find(s[j]) == ans.end()) {
+                //insert the substring at that length into the set, then increment the j tracker by 1
                 ans.insert(s[j++]);
+                //the answer is whichever is greater, either itself or the size of our set
                 answer = std::max(answer, (int)ans.size());
             }
-            else 
+            else {
+                //if we did find a substring, simply clear the set and add a new substring into the set, 
+                //then increment the i tracker by 1
                 ans.erase(s[i++]);
+            }
         }
         return answer;
     }
 };
 
 int main() {
-	//Problem 5:  Find the longest palindrome in a string
-    //Problem 3:  Find the length of the longest substring in a given string
+	//Problem 5:   Find the longest palindrome in a string
+    //Problem 3:   Find the length of the longest substring in a given string
 }

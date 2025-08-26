@@ -55,7 +55,7 @@ public:
     bool checkTree(TreeNode* nodeOne, TreeNode* nodeTwo) {
 		//if the nodes on this level are not there, then its true
         if (!nodeOne && !nodeTwo) return true;
-		//if one exists but not hte other, then its false
+		//if one exists but not the other, then its false
         if (!nodeOne || !nodeTwo) return false;
 		//we check the boolean value of what we return by recursively calling this function on the left and right nodes of each branching path
         return (nodeOne->val == nodeTwo->val && (checkTree(nodeOne->left, nodeTwo->left) && checkTree(nodeOne->right, nodeTwo->right)));

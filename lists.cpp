@@ -165,18 +165,29 @@ class Solution_41 {
 public:
     int firstMissingPositive(std::vector<int>& nums) {
         if (nums.size() <= 0) return 0;
+
         for (int i = 0; i < nums.size(); i++) {
             int temp = nums[i];
+ 
             while ((temp >= 1 && temp <= nums.size()) && temp != i + 1 && nums[temp-1] != temp) {
+                //we're swapping the nums as that would effectively be the best way to sort the list
+                //you could theoretically just use the built-in sort function, but this way we can control
+                //exactly how we sort it
                 std::swap(nums[temp-1], nums[i]);
                 temp = nums[i];
             }
         }
         for (int j = 0; j < nums.size(); j++) {
+            //is the number at this position supposed to be the next natural progression at that point
+            //in that list? if so, skip it. otherwise, return the that number + 1 as the missing positive
+            //number in that list
             if (nums[j] == j + 1)
                 continue;
             return j + 1;
         }
+
+        //if the list is correct by the time we got to this point, simply return the last element in the
+        //list + 1 as that would be the next missing number
         return nums[nums.size() - 1] + 1;
     }
 };
@@ -242,10 +253,18 @@ public:
     int findPeakElement(std::vector<int>& nums) {
         if (nums.size() == 0) return 0;
 
+        //fairly classic binary search algorithm implementation
         int leftPtr = 0, rightPtr = nums.size() - 1;
 
         while (leftPtr < rightPtr) {
+            //DO NOT FORGET THIS, will cause integer overflow issues if left out
             int midPtr = leftPtr + (rightPtr - leftPtr) / 2;
+            
+            //if the middle of the list is greater than the one next to it on its right, then increment
+            //the left by the mid. the left will serve as our index and we don't have to keep track of
+            //it separately with a data structure. if its not, than we set the right to the middle. 
+            //this works because it immediately tracks if its the peak element beacuse of the way it
+            //checks the next element
             if (nums[midPtr] < nums[midPtr+1])
                 leftPtr = midPtr + 1;
             else
