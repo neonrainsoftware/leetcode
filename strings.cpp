@@ -1,4 +1,6 @@
 #include <string>
+#include <math.h>
+#include <unordered_set>
 
 class Solution_5 {
 public:
@@ -40,6 +42,26 @@ public:
     }
 };
 
+class Solution_3 {
+public:
+    int lengthOfLongestSubstring(std::string s) {
+        if (s.length() == 0) return 0;
+        std::unordered_set<char> ans;
+        int answer = 0, i = 0, j = 0;
+
+        while (j < s.length()) {
+            if (ans.find(s[j]) == ans.end()) {
+                ans.insert(s[j++]);
+                answer = std::max(answer, (int)ans.size());
+            }
+            else 
+                ans.erase(s[i++]);
+        }
+        return answer;
+    }
+};
+
 int main() {
-	//Problem 5: Find the longest palindrome in a string
+	//Problem 5:  Find the longest palindrome in a string
+    //Problem 3:  Find the length of the longest substring in a given string
 }
