@@ -215,6 +215,28 @@ public:
     }
 };
 
+class Solution_57 {
+public:
+    std::vector<std::vector<int>> insert(std::vector<std::vector<int>>& intervals, std::vector<int>& newInterval) {
+        if (intervals.size() == 0) return intervals;
+
+        intervals.push_back(newInterval);
+        sort(intervals.begin(), intervals.end());
+
+        std::vector<std::vector<int>> result;
+        result.push_back(intervals[0]);
+
+        for (int i = 1; i < intervals.size(); i++) {
+            if (result.back()[1] >= intervals[i][0]) 
+                result.back()[1] = std::max(result.back()[1], intervals[i][1]);
+            else
+                result.push_back(intervals[i]);
+        }
+
+        return result;
+    }
+};
+
 int main() {
 	//Problem 238: Return array with all entries being a product of every other entry in that list
     //Problem 128: Return the length of the longest consecutive numbers list in a list
@@ -223,4 +245,5 @@ int main() {
     //Problem 152: Return the highest product amongst subarrays in an array
     //Problem 41:  Find the first missing positive integer given a list of  numbers
     //Problem 81:  Search a rotated sorted array
+    //Problem 57:  Insert a new interval (pair) into a list based on front and back of that new interval
 }
