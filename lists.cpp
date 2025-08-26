@@ -237,6 +237,25 @@ public:
     }
 };
 
+class Solution_162 {
+public:
+    int findPeakElement(std::vector<int>& nums) {
+        if (nums.size() == 0) return 0;
+
+        int leftPtr = 0, rightPtr = nums.size() - 1;
+
+        while (leftPtr < rightPtr) {
+            int midPtr = leftPtr + (rightPtr - leftPtr) / 2;
+            if (nums[midPtr] < nums[midPtr+1])
+                leftPtr = midPtr + 1;
+            else
+                rightPtr = midPtr;
+        }
+
+        return leftPtr;
+    }
+};
+
 int main() {
 	//Problem 238: Return array with all entries being a product of every other entry in that list
     //Problem 128: Return the length of the longest consecutive numbers list in a list
@@ -246,4 +265,5 @@ int main() {
     //Problem 41:  Find the first missing positive integer given a list of  numbers
     //Problem 81:  Search a rotated sorted array
     //Problem 57:  Insert a new interval (pair) into a list based on front and back of that new interval
+    //Problem 162: Find the peak element in a list. Must run in O(log n) time
 }
