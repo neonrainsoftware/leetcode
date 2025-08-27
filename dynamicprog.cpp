@@ -69,7 +69,25 @@ public:
     }
 };
 
+class Solution_70 {
+public:
+
+    int solveStairs(int n, std::vector<int>& tempVec) {
+        if (n == 0 || n == 1) return 1;
+        if (tempVec[n] != -1) return tempVec[n]; 
+        tempVec[n] = (solveStairs(n - 1, tempVec) + solveStairs(n - 2, tempVec));
+        return tempVec[n];
+    }
+
+    int climbStairs(int n) {
+        if (n <= 0) return 0;
+        std::vector<int> tempVec(n+1, -1);
+        return solveStairs(n, tempVec);
+    }
+};
+
 int main() {
 	//Problem 322: Return minumum number of coins required from a coin denomination list to reach an amount
     //Problem 139: Return if an string can be split up cleanly based on the words from a given word list
+    //Problem 70:  Return the number of distinct ways to climb a stairs list
 }

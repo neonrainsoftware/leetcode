@@ -72,8 +72,25 @@ public:
     }
 };
 
+class Solution_876 {
+public:
+    ListNode* middleNode(ListNode* head) {
+        if (!head->next) return head;
+
+        ListNode* fastPtr = head;
+        ListNode* slowPtr = head;
+
+        while (fastPtr && fastPtr->next) {
+            fastPtr = fastPtr->next->next;
+            slowPtr = slowPtr->next;
+        }
+
+        return slowPtr;
+    }
+};
 
 int main(){
-	//Problem 19: Delete nth node from the end of a Linked List 
-	//Problem 24: Swap Nodes in Linked List (without modifying values)
+	//Problem 19:  Delete nth node from the end of a Linked List 
+	//Problem 24:  Swap Nodes in Linked List (without modifying values)
+    //Problem 876: Find the middle node of a linked list
 }
