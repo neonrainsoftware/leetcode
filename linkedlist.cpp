@@ -1,4 +1,5 @@
 #include <string>
+#include <set>
 
 struct ListNode {
 	int val;
@@ -89,8 +90,32 @@ public:
     }
 };
 
+class Solution {
+public:
+    bool hasCycle(ListNode *head) {
+        if (!head) return false;
+        //create a sample node set to tell if we found a cycle
+        std::set<ListNode*> nodeSet;
+
+        //iterate through the linked list
+        while (head->next) {
+            //if we found that the head in the node set, that means there is a cycle in the list
+            //return early
+            if (nodeSet.find(head) != nodeSet.end()) return true;
+           
+            //otherwise, we append it to the nodeset with the node we have. the idea is that if we have
+            //a cycle, it should eventually reach the head. by using a  set, we can guarentee that order
+            //is preserved and we wont have to worry about indexes
+            nodeSet.insert(head);
+            head = head->next;
+        }
+        return false;
+    }
+};
+
 int main(){
 	//Problem 19:  Delete nth node from the end of a Linked List 
 	//Problem 24:  Swap Nodes in Linked List (without modifying values)
     //Problem 876: Find the middle node of a linked list
+    //Problem 141: Determine if a linked list has a cycle
 }
