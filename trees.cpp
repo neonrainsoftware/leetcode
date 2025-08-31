@@ -116,16 +116,24 @@ class Solution_662 {
 public:
     int widthOfBinaryTree(TreeNode* root) {
         if (!root) return 0;
+        //we're going to use a queue with pairs for measuruing the width of a binary tree
         std::queue<std::pair<TreeNode*, int>> q;
         int result = 0;
 
+        //push the root to the queue, knowing we're goign to be seeing at least a depth of 1
+        //with a valid root node
         q.push({root, 1});
 
+        //using a fairly classic bfs traversal
         while (!q.empty()) {
+            //we get the size of the current queue as well as two pointer values and the level of the
+            //first element in the queue
             int queueSize = q.size();
             int start = 0, end = 0;
             int addrVal = q.front().second;
+
             for (int i = 0; i < queueSize; i++) {
+                //we get the node thats at the first index
                 TreeNode* temp = q.front().first;
                 int tempVal = q.front().second - addrVal;
                 q.pop();
@@ -133,11 +141,15 @@ public:
                 if (i == 0) start = tempVal;
                 if (i == queueSize - 1) end = tempVal;
 
+                //we try to go down the depths of the tree depending on if the next two nodes down the
+                //tree are valid and if they are, push to the queue along with where it is in the tree
                 if (temp->left) 
                     q.push({temp->left, 2 * tempVal});
                 if (temp->right)
                     q.push({temp->right, 2 * tempVal + 1});
             }
+            
+            //the final result is whichever is higher, either where we are or where we last were
             result = std::max(result, end - start + 1);
         }
 

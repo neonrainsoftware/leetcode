@@ -127,12 +127,17 @@ public:
         if (nums.size() <= 2) return {};
         std::vector<std::vector<int>> result;
 
+        //we first sort the vector to traverse it easier
         stable_sort(nums.begin(), nums.end());
+
         for (int i = 0; i < nums.size() - 2; i++) {
             if (i > 0 && nums[i] == nums[i-1])
                 continue;
+
+            //we use a two pointer solution to look through the array
             int ptrone = i + 1;
             int ptrtwo = nums.size() - 1;
+
             while (ptrone < ptrtwo) {
                 int sum = nums[i] + nums[ptrone] + nums[ptrtwo];
                 if (sum < 0)
@@ -140,6 +145,9 @@ public:
                 else if (sum > 0)
                     ptrtwo -= 1;
                 else {
+                    //if we continusouly iterate and find that the sum equals 0, we push the resulting
+                    //array to the result vector with the number's we're looking for, using our pointers
+                    //to extract the correct numbers
                     std::vector<int> temp = {nums[i], nums[ptrone], nums[ptrtwo]};
                     result.push_back(temp);
                     while (ptrone < ptrtwo && nums[ptrone] == nums[ptrone + 1]) ptrone++;
