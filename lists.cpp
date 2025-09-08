@@ -275,14 +275,99 @@ public:
     }
 };
 
+class Solution_2022 {
+public:
+    std::vector<std::vector<int>> construct2DArray(std::vector<int>& original, int m, int n) {
+        if (original.size() == 0 || (n > m && original.size() < n)) return {};
+
+        std::vector<std::vector<int>> result;
+        std::vector<int> temp;
+        int ptrOne = n, ptrTwo = m;
+
+        for (int i = 0; i < original.size(); i++) {
+            temp.push_back(original[i]);
+            ptrOne--;
+            if (ptrOne == 0 || i == original.size() - 1) {
+                result.push_back(temp);
+                temp.clear();
+                ptrOne = n;
+                ptrTwo--;
+            }
+        }
+
+        if (ptrTwo == 0) return result;
+        return {};
+    }
+};
+
+class Solution_238 {
+public:
+    std::vector<int> productExceptSelf(std::vector<int>& nums) {
+        if (nums.size() == 0) return nums;
+        int size = nums.size();
+
+        //the concept here is to split the array into two distinct parts, one with the higher end and the other with the lower
+        //each named prefix and suffix respectively, and each padded out with the size of the nums array
+        std::vector<int> ans(size);
+        std::vector<int> prefix(size);
+        std::vector<int> suffix(size);
+        //we preset the prefix and suffix with 1 to help start the loops
+        prefix[0] = 1;
+        suffix[size-1] = 1;
+        
+        //looping through the prefix to appropriately find the product for each of the array elements in the prefix
+        for (int i = 1; i < size; i++) 
+            prefix[i] = nums[i-1] * prefix[i-1];
+
+        //do the asme for the suffix, just in reverse order
+        for (int j = size-2; j >= 0; j--) 
+            suffix[j] = suffix[j+1] * nums[j+1];
+
+        //update an answer array with what we've got from both the prefix and suffix arrays
+        for (int k = 0; k < size; k++)
+            ans[k] = prefix[k] * suffix[k];
+
+        return ans;
+    }
+};
+
+class Solution_643 {
+public:
+    double findMaxAverage(std::vector<int>& nums, int k) {
+        if (nums.size() < k) return 0;
+
+        //initiate a sliding window so that we can provide ourselves with a baseline. we only
+        //care about the initial sum because we can always divide the full answer by k at the
+        //end anyway and we just need the maximum number
+        double temp = nums[0];
+        for (int j = 1; j < k ; j++) {
+            temp += nums[j];
+        }
+
+        //once we have the baseline, run through the rest of the vector using a sliding window
+        //to determine which of the numbers is biggest by the end
+        double result = temp;
+        for (int i = k; i < nums.size(); i++) {
+            temp += nums[i] - nums[i - k];
+            result = std::max(result, temp);
+        }
+
+        //return the result divided by k
+        return result / k;
+    }
+};
+
 int main() {
-	//Problem 238: Return array with all entries being a product of every other entry in that list
-    //Problem 128: Return the length of the longest consecutive numbers list in a list
-    //Problem 198: Return the highest amount of money in an array given some parameters without getting caught 
-    //Problem 213: Return the highest amount of money in an array without getting caught, now circular
-    //Problem 152: Return the highest product amongst subarrays in an array
-    //Problem 41:  Find the first missing positive integer given a list of  numbers
-    //Problem 81:  Search a rotated sorted array
-    //Problem 57:  Insert a new interval (pair) into a list based on front and back of that new interval
-    //Problem 162: Find the peak element in a list. Must run in O(log n) time
+	//Problem 238:  Return array with all entries being a product of every other entry in that list
+    //Problem 128:  Return the length of the longest consecutive numbers list in a list
+    //Problem 198:  Return the highest amount of money in an array given some parameters without getting caught 
+    //Problem 213:  Return the highest amount of money in an array without getting caught, now circular
+    //Problem 152:  Return the highest product amongst subarrays in an array
+    //Problem 41:   Find the first missing positive integer given a list of  numbers
+    //Problem 81:   Search a rotated sorted array
+    //Problem 57:   Insert a new interval (pair) into a list based on front and back of that new interval
+    //Problem 162:  Find the peak element in a list. Must run in O(log n) time
+    //Problem 2022: Create a 2D array out of a 1D array given m and n dimensions
+    //Problem 238:  Return an array were array[i] is equal to the product of all other i, without using division in O(n)
+    //Problem 643:  Find the maximum average of k elements in a vector
 }
