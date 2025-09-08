@@ -39,6 +39,34 @@ public:
     }
 };
 
+class Solution_69 {
+public:
+    int mySqrt(int x) {
+        if (x == 0 || x == 1) return x;
+
+        //implement a basic binary search
+        int start = 0, end = x, middle = 0;
+        while (start <= end) {
+            //to prevent overflow, we need to implement this
+            middle = start + (end - start) / 2;
+            
+            //this is for large numbers that int cannot allocate in C++
+            long long square = static_cast<long long>(middle) * middle; 
+
+            if (square > x)
+                end = middle - 1;
+            else if (square == x)
+                return middle;
+            else
+                start = middle + 1;
+        }
+
+        //round when we return the final answer
+        return round(end);
+    }
+};
+
 int main() {
 	//Problem 268: Find the missing number in a sequence of [0, n] distinct numbers in an array
+    //Problem 69:  Implement the square root function without using the sqrt built in function
 }
