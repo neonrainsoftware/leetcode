@@ -162,9 +162,37 @@ public:
      }
 };
 
+class Solution_35 {
+public:
+    int searchInsert(std::vector<int>& nums, int target) {
+        if (nums.size() == 0) return 0;
+
+        //fairly simple binary search implementation
+        int start = 0, end = nums.size() - 1, middle = 0;
+        while (start <= end) {
+            middle = start + (end - start) / 2;
+            if (nums[middle] == target)
+                return middle;
+            else {
+                if (nums[middle] >= target) {
+                    end = middle - 1;
+                }
+                else
+                    start = middle + 1;
+            }
+        }
+
+        //we return the start because we're pairing down the vector as we go along already,
+        //making the search more effective because we're already tracking where the int would
+        //go even if we don't find it because we're dividing the search parameters
+        return start;
+    }
+};
+
 int main() {
 	//Problem 18:  Return unique quadruplets in list based on their sum being equal to the target number
     //Problem 217: Check if all elements in an array are unique
     //Problem 16:  Find three integers in a list such that the sum is closest to a target int
     //Problem 15:  Find all triples in a list such that i != j, j != k, k != i, and the sum of all numbers is 0
+    //Problem 35:  Find an int in a sorted vector in O(log n) time, or return where it would be if not found
 }
