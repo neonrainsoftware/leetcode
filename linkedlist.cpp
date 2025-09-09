@@ -1,5 +1,6 @@
 #include <string>
 #include <set>
+#include <stack>
 
 struct ListNode {
 	int val;
@@ -113,9 +114,36 @@ public:
     }
 };
 
+class Solution_143 {
+public:
+    void reorderList(ListNode* head) {
+        if (!head || !head->next) return;
+
+        std::stack<ListNode*> nodeStack;
+        ListNode* nodePtr = head;
+
+        while(nodePtr) {
+            nodeStack.push(nodePtr);
+            nodePtr = nodePtr->next;            
+        }
+
+        ListNode* nextPtr = head;
+        for (int i = 0; i < nodeStack.size() / 2; i++) {
+            ListNode* curr = nodeStack.top();
+            nodeStack.pop();
+            curr->next = nextPtr->next;
+            nextPtr->next = curr;
+            nextPtr = nextPtr->next->next;   
+        }
+
+        nextPtr->next = nullptr;
+    }
+};
+
 int main(){
 	//Problem 19:  Delete nth node from the end of a Linked List 
 	//Problem 24:  Swap Nodes in Linked List (without modifying values)
     //Problem 876: Find the middle node of a linked list
     //Problem 141: Determine if a linked list has a cycle
+    //Problem 143: Reorder a linked list by putting the last element as the second
 }
