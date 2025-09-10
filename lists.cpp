@@ -377,6 +377,29 @@ public:
     }
 };
 
+class Solution_367 {
+public:
+    bool isPerfectSquare(int num) {
+        if (num == 0) return false;
+        if (num == 1) return true;
+
+        int start = 0, end = num, middle = 0;
+
+        while (start <= end) {
+            middle = (start + end) / 2;
+            long middleSquare = (long)middle * middle;
+            if (middleSquare == num)
+                return true;
+            if (middleSquare > num)
+                end = middle - 1;
+            else
+                start = middle + 1;
+        }
+
+        return false;
+    }
+};
+
 int main() {
 	//Problem 238:  Return array with all entries being a product of every other entry in that list
     //Problem 128:  Return the length of the longest consecutive numbers list in a list
@@ -391,4 +414,5 @@ int main() {
     //Problem 238:  Return an array were array[i] is equal to the product of all other i, without using division in O(n)
     //Problem 643:  Find the maximum average of k elements in a vector
     //Problem 3046: Find out if a vector is possible to split in two, without any repeats
+    //Problem 367:  Find if a number is a perfect square without using the sqrt function
 }
