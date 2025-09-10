@@ -20,3 +20,27 @@ func findDisappearedNumbers(nums []int) []int {
 	}
 	return result
 }
+
+//Problem 169: Find the majority element in an array
+func majorityElement(nums []int) int {
+    if len(nums) == 0 {
+        return 0
+    }
+
+    currCnter := math.MinInt
+    maxCnter := 0
+    for i := 0; i < len(nums); i++ {
+       if currCnter != nums[i] {
+        if maxCnter <= 0 {
+            maxCnter++
+            currCnter = nums[i]
+        } else {
+            maxCnter--
+        }
+       } else {
+        maxCnter++
+       }
+    }
+
+    return currCnter
+}
