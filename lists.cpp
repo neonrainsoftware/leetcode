@@ -357,6 +357,26 @@ public:
     }
 };
 
+class Solution_3046 {
+public:
+    bool isPossibleToSplit(std::vector<int>& nums) {
+        if (nums.size() == 0) return false;
+
+        std::unordered_map<int, int> result;
+        int maxCnt = 0;
+
+        for (int i = 0; i < nums.size(); i++) {
+            result[nums[i]] += 1;
+            if (result[nums[i]] > maxCnt)
+                maxCnt = result[nums[i]];
+            if (maxCnt > 2)
+                return false;
+        }
+
+        return true;
+    }
+};
+
 int main() {
 	//Problem 238:  Return array with all entries being a product of every other entry in that list
     //Problem 128:  Return the length of the longest consecutive numbers list in a list
@@ -370,4 +390,5 @@ int main() {
     //Problem 2022: Create a 2D array out of a 1D array given m and n dimensions
     //Problem 238:  Return an array were array[i] is equal to the product of all other i, without using division in O(n)
     //Problem 643:  Find the maximum average of k elements in a vector
+    //Problem 3046: Find out if a vector is possible to split in two, without any repeats
 }

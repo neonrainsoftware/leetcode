@@ -44,3 +44,25 @@ func majorityElement(nums []int) int {
 
     return currCnter
 }
+
+//Problem 3046: Find out if a vector is possible to split in two, without any repeats
+func isPossibleToSplit(nums []int) bool {
+    if len(nums) == 0 {
+        return false
+    }    
+
+    result := make(map[int]int)
+    maxCnt := 0
+
+    for i := 0; i < len(nums); i++ {
+        result[nums[i]] += 1
+        if result[nums[i]] > maxCnt {
+            maxCnt = result[nums[i]]
+        }
+        if maxCnt > 2 {
+            return false
+        }
+    }
+
+    return true
+}
