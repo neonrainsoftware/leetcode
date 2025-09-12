@@ -157,10 +157,29 @@ public:
     }
 };
 
+class Solution_230 {
+public:
+    int kthSmallest(TreeNode* root, int k) {
+        if (root->left == nullptr && root->right == nullptr) return root->val;
+        std::vector<int> ans;
+
+        inOrderTraverse(root, ans, k);
+        return ans[k-1];
+    }
+
+    void inOrderTraverse(TreeNode* node, std::vector<int> &ans, int k) {
+        if (node == nullptr) return;
+        inOrderTraverse(node->left, ans, k);
+        ans.push_back(node->val);
+        inOrderTraverse(node->right, ans, k);
+    }
+};
+
 int main() {
 	//Problem 637: Find the average value of each level in a tree using BFS
 	//Problem 100: Check if two trees are identical to each other
     //Problem 98:  Check if a tree is a valid BST (Binary Search Tree)
     //Problem 102: Binary Tree Level Order Traversal
     //Problem 662: Find the maximum width on a Binary Tree
+    //Problem 230: Find the kth smallest element in a binary search tree
 }

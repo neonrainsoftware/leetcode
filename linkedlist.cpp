@@ -91,7 +91,7 @@ public:
     }
 };
 
-class Solution {
+class Solution_141 {
 public:
     bool hasCycle(ListNode *head) {
         if (!head) return false;
@@ -140,10 +140,35 @@ public:
     }
 };
 
+class Solution_92 {
+public:
+    ListNode* reverseBetween(ListNode* head, int left, int right) {
+        if (left == right) return head;
+        ListNode* temp = new ListNode(0);
+        ListNode* prev = temp;
+
+        temp->next = head;
+        for (int i = 0; i < left - 1; i++) {
+            prev = prev->next; 
+        }
+
+        ListNode* curr = prev->next;
+        for (int j = 0; j < right - left; j++) {
+            ListNode* temp2 = curr->next;
+            curr->next = temp2->next;
+            temp2->next = prev->next;
+            prev->next = temp2;
+        } 
+
+        return temp->next;
+    }
+};
+
 int main(){
 	//Problem 19:  Delete nth node from the end of a Linked List 
 	//Problem 24:  Swap Nodes in Linked List (without modifying values)
     //Problem 876: Find the middle node of a linked list
     //Problem 141: Determine if a linked list has a cycle
     //Problem 143: Reorder a linked list by putting the last element as the second
+    //Problem 92:  Reverse a linked list in order from position left <= position right
 }
