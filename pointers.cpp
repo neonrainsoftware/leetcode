@@ -189,10 +189,47 @@ public:
     }
 };
 
+class Solution_75 {
+public:
+    void sortColors(std::vector<int>& nums) {
+        int cntRed = 0, cntWhite = 0, cntBlue = 0;
+        
+        for (int i = 0; i < nums.size(); i++) {
+            switch(nums[i]) {
+                case 0: cntRed++; break;
+                case 1: cntWhite++; break;
+                default:{
+                    cntBlue++;
+                    break;
+                }
+            }
+        }
+        
+        for (int j = 0; j < nums.size(); j++) {
+            if (cntRed > 0) {
+                nums[j] = 0;
+                cntRed--;
+                continue;
+            }
+            if (cntWhite > 0) {
+                nums[j]  = 1;
+                cntWhite--;
+                continue;
+            }
+            if (cntBlue > 0) {
+                nums[j] = 2;
+                cntBlue--;
+                continue;
+            }
+        }
+    }
+};
+
 int main() {
 	//Problem 18:  Return unique quadruplets in list based on their sum being equal to the target number
     //Problem 217: Check if all elements in an array are unique
     //Problem 16:  Find three integers in a list such that the sum is closest to a target int
     //Problem 15:  Find all triples in a list such that i != j, j != k, k != i, and the sum of all numbers is 0
     //Problem 35:  Find an int in a sorted vector in O(log n) time, or return where it would be if not found
+    //Problem 75:  Sort an array in place so that objects of the same color are adjacent, in order of R, W, and B
 }
