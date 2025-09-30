@@ -164,6 +164,35 @@ public:
     }
 };
 
+class Solution_61 {
+public:
+    ListNode* rotateRight(ListNode* head, int k) {
+        if (!head || !head->next) return head;
+
+        ListNode* temp = head;
+        int listSize = 1;
+
+        while (temp->next) {
+            temp = temp->next;
+            listSize++;
+        }
+        
+        temp->next = head;
+        temp = head;
+        k = k % listSize;
+        int m = 1;
+
+        while (m < listSize - k) {
+            temp = temp->next;
+            m++;
+        }
+        ListNode* resHead = temp->next;
+        temp->next = nullptr;
+
+        return resHead;
+    }
+};
+
 int main(){
 	//Problem 19:  Delete nth node from the end of a Linked List 
 	//Problem 24:  Swap Nodes in Linked List (without modifying values)
@@ -171,4 +200,5 @@ int main(){
     //Problem 141: Determine if a linked list has a cycle
     //Problem 143: Reorder a linked list by putting the last element as the second
     //Problem 92:  Reverse a linked list in order from position left <= position right
+    //Problem 61:  Rotate a linked list by shifting the last element in it k times
 }
