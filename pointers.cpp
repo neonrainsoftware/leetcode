@@ -225,6 +225,29 @@ public:
     }
 };
 
+class Solution_977 {
+public:
+    std::vector<int> sortedSquares(std::vector<int>& nums) {
+        if (nums.size() == 0) return {};
+
+        std::vector<int> result(nums.size(), 0);
+        int ptrOne = 0, ptrTwo = nums.size() - 1;
+
+        for (int i = nums.size() - 1; i >= 0; i--) {
+            if (abs(nums[ptrOne]) > abs(nums[ptrTwo])) {
+                result[i] = nums[ptrOne] * nums[ptrOne];
+                ptrOne++;
+            } else {
+                result[i] = nums[ptrTwo] * nums[ptrTwo];
+                ptrTwo--;
+            }
+        }
+
+        //sort(nums.begin(), nums.end());
+        return result;
+    }
+};
+
 int main() {
 	//Problem 18:  Return unique quadruplets in list based on their sum being equal to the target number
     //Problem 217: Check if all elements in an array are unique
@@ -232,4 +255,5 @@ int main() {
     //Problem 15:  Find all triples in a list such that i != j, j != k, k != i, and the sum of all numbers is 0
     //Problem 35:  Find an int in a sorted vector in O(log n) time, or return where it would be if not found
     //Problem 75:  Sort an array in place so that objects of the same color are adjacent, in order of R, W, and B
+    //Problem 977: Square each integer in an array, then sort it
 }
