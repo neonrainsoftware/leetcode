@@ -160,7 +160,7 @@ public:
 class Solution_230 {
 public:
     int kthSmallest(TreeNode* root, int k) {
-        if (root->left == nullptr && root->right == nullptr) return root->val;
+        if (!root->left && !root->right) return root->val;
         std::vector<int> ans;
 
         inOrderTraverse(root, ans, k);
@@ -168,10 +168,26 @@ public:
     }
 
     void inOrderTraverse(TreeNode* node, std::vector<int> &ans, int k) {
-        if (node == nullptr) return;
+        if (!node) return;
         inOrderTraverse(node->left, ans, k);
         ans.push_back(node->val);
         inOrderTraverse(node->right, ans, k);
+    }
+};
+
+class Solution_104 {
+public:
+    int maxDepth(TreeNode* root) {
+        if (!root) return 0;
+        int depth = 0;
+        return traverse(root, depth);
+    }
+
+    int traverse(TreeNode* node, int depth) {
+        if (!node) return depth;
+        int rightNode = traverse(node->right, depth + 1);
+        int leftNode = traverse(node->left, depth + 1);
+        return std::max(rightNode, leftNode);
     }
 };
 
@@ -182,4 +198,5 @@ int main() {
     //Problem 102: Binary Tree Level Order Traversal
     //Problem 662: Find the maximum width on a Binary Tree
     //Problem 230: Find the kth smallest element in a binary search tree
+    //Problem 104: Find the max depth of a binary tree
 }
